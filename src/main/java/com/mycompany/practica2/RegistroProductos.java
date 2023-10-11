@@ -2,21 +2,32 @@
 package com.mycompany.practica2;
 
 import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JOptionPane;
 
 public class RegistroProductos {
-    private List<Producto> productos;
-
-    public RegistroProductos() {
-        productos = new ArrayList<>();
+    private ArrayList<Producto> lista;
+    
+    public RegistroProductos(){
+        lista = new ArrayList <Producto>();
     }
-
-    public void agregarProducto(Producto producto) {
-        productos.add(producto);
+    
+    public void addProducto(Producto miProducto){
+        lista.add(miProducto);
     }
-
-    public List<Producto> obtenerProductos() {
-        return productos;
+    
+    public int getRegistros(){
+        return lista.size();
     }
+    
+    public Producto getRegistroProducto(int posicion){
+        try{
+            Producto producto = lista.get(posicion);
+            return producto;
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Posicion invalida");
+            return new Producto();
+        }
+    }
+    
 }
 

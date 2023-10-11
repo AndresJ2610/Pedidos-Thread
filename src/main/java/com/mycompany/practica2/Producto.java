@@ -2,12 +2,13 @@
 package com.mycompany.practica2;
 
 public class Producto {
+    private static RegistroProductos productos;
     private String nombre;
     private double precio;
 
-    public Producto(String nombre, double precio) {
-        this.nombre = nombre;
-        this.precio = precio;
+    public Producto() {
+        this.nombre = "";
+        this.precio = 0.0;
     }
 
     public String getNombre() {

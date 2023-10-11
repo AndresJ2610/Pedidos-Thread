@@ -1,12 +1,16 @@
 
 package com.mycompany.practica2;
 
-public class Registrar extends javax.swing.JFrame {
-    private RegistroProductos registro;
+import javax.swing.JOptionPane;
 
-    public Registrar() {
+public class Registrar extends javax.swing.JFrame {
+    public static RegistroProductos lista;
+
+    public Registrar(RegistroProductos lista) {
         initComponents();
         limpiarTextos();
+        btnRegistrar.setMnemonic('A');
+        this.lista = lista;
     }
 
     private void limpiarTextos(){
@@ -24,7 +28,7 @@ public class Registrar extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setText("Nombre");
@@ -86,15 +90,20 @@ public class Registrar extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        String nombre = txtNombre.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
-        Producto producto = new Producto(nombre, precio);
-        registro.agregarProducto(producto);
+        
+        Producto producto = new Producto();
+        try{
+            producto.setNombre(txtNombre.getText());
+            producto.setPrecio(Double.parseDouble(txtPrecio.getText()));
+            lista.addProducto(producto);
+            JOptionPane.showMessageDialog(null, "Se registro."+lista.getRegistros());
+            limpiarTextos();
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Error");
+            limpiarTextos();
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -109,20 +118,20 @@ public class Registrar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registrar().setVisible(true);
+                new Registrar(lista).setVisible(true);
             }
         });
     }
