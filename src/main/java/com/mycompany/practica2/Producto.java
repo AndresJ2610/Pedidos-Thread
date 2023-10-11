@@ -2,7 +2,7 @@
 package com.mycompany.practica2;
 
 public class Producto {
-    private static RegistroProductos productos;
+    private static RegistroProductos lista;
     private String nombre;
     private double precio;
 

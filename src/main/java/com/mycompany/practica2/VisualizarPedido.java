@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.practica2;
 
 /**
@@ -43,19 +40,19 @@ public class VisualizarPedido extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("Visualización de Pedidos");
 
-        lblVehiculo1.setText("Vehículo");
+        lblVehiculo1.setText("Vehículo 1");
 
         lblDistancia1.setText("Distancia");
 
         btnEnviar1.setText("Enviar");
 
-        lblVehiculo2.setText("Vehículo");
+        lblVehiculo2.setText("Vehículo 2");
 
         lblDistancia2.setText("Distancia");
 
         btnEnviar2.setText("Enviar");
 
-        lblVehiculo3.setText("Vehículo");
+        lblVehiculo3.setText("Vehículo 3");
 
         lblDistancia3.setText("Distancia");
 
