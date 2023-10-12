@@ -3,6 +3,7 @@ package com.mycompany.practica2;
 
 public class Menu extends javax.swing.JFrame {
     public RegistroProductos lista = new RegistroProductos();
+    public Pedidos pedidos = new Pedidos();
     public Menu() {
         initComponents();
     }
@@ -16,6 +17,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -52,6 +54,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem2);
+
+        jMenuItem4.setText("Visualizar Pedido");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
 
@@ -110,7 +120,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        Historial historial = new Historial();
+        Historial historial = new Historial(pedidos);
         historial.setVisible(true);
         historial.setTitle("Historial de Pedidos");
         historial.setLocationRelativeTo(null);
@@ -118,11 +128,19 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        FrmPedido pedido = new FrmPedido(lista);
+        FrmPedido pedido = new FrmPedido(lista, pedidos);
         pedido.setVisible(true);
         pedido.setTitle("Pedidos");
         pedido.setLocationRelativeTo(null);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        VisualizarPedido ver = new VisualizarPedido(pedidos);
+        ver.setVisible(true);
+        ver.setTitle("Historial de Pedidos");
+        ver.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,5 +185,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

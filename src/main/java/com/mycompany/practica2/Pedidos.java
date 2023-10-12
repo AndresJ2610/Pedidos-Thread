@@ -18,7 +18,7 @@ public class Pedidos {
         pedidos = new ArrayList <Pedido>();
     }
     
-    public void addProducto(Pedido miPedido){
+    public void addPedido(Pedido miPedido){
         pedidos.add(miPedido);
     }
     

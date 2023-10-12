@@ -1,10 +1,12 @@
-
 package com.mycompany.practica2;
 
+import java.io.*;
 import javax.swing.JOptionPane;
 
-public class Registrar extends javax.swing.JFrame {
+public class Registrar extends javax.swing.JFrame{
     public static RegistroProductos lista;
+    Producto producto = new Producto();
+    
 
     public Registrar(RegistroProductos lista) {
         initComponents();
@@ -92,6 +94,7 @@ public class Registrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         Producto producto = new Producto();
+        
         try{
             producto.setNombre(txtNombre.getText());
             producto.setPrecio(Double.parseDouble(txtPrecio.getText()));

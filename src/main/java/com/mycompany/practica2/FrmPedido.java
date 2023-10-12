@@ -1,5 +1,9 @@
 
 package com.mycompany.practica2;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
@@ -7,12 +11,19 @@ public class FrmPedido extends javax.swing.JFrame {
     private DefaultTableModel modelo;
     private DefaultTableModel modelo2;
     public static RegistroProductos lista;
+    public static Pedidos pedidos;
     int con = 0;
     private int seleccionFila;
+    String[] nombre = new String[5];
+    int[] distancia = new int[5];
+    double[] precio = new double[5];
+    String[] vehiculo = new String[5];
+    int index = 0;
     
     //Constructor de JFrame
-    public FrmPedido(RegistroProductos lista) {
+    public FrmPedido(RegistroProductos lista, Pedidos pedidos) {
         initComponents();
+        this.pedidos = pedidos;
         modelo2 = new DefaultTableModel();
         CargarInterfaz1();
         Producto producto;
@@ -67,7 +78,7 @@ public class FrmPedido extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnVerPedido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -127,10 +138,10 @@ public class FrmPedido extends javax.swing.JFrame {
 
         jLabel8.setText("Q.");
 
-        jButton1.setText("Ver Pedido");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVerPedido.setText("Ver Pedido");
+        btnVerPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVerPedidoActionPerformed(evt);
             }
         });
 
@@ -177,7 +188,7 @@ public class FrmPedido extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(171, 171, 171)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -205,7 +216,7 @@ public class FrmPedido extends javax.swing.JFrame {
                             .addComponent(cboVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(246, 246, 246)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -225,32 +236,51 @@ public class FrmPedido extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        Pedido pedido = new Pedido();
+        File archivo = new File("pedido.dat");
         String []info = new String[4];
         try{
-            String nombre = String.valueOf(tblProducto.getValueAt(seleccionFila, 0));
-            double precio = Double.parseDouble(String.valueOf(tblProducto.getValueAt(seleccionFila, 1)));
-            int distancia = Integer.parseInt(txtDistancia.getText());
-            String vehiculo = cboVehiculo.getSelectedItem().toString();
-            int index = cboVehiculo.getSelectedIndex();
-            info[0] = vehiculo;
-            info[1] = nombre;
-            info[2] = String.valueOf(precio);
-            info[3] = String.valueOf(distancia);
+            nombre[index] = String.valueOf(tblProducto.getValueAt(seleccionFila, 0));
+            precio[index] = Double.parseDouble(String.valueOf(tblProducto.getValueAt(seleccionFila, 1)));
+            distancia[index] = Integer.parseInt(txtDistancia.getText());
+            vehiculo[index] = cboVehiculo.getSelectedItem().toString();
+            pedido.setNombre(nombre[index]);
+            pedido.setPrecio(precio[index]);
+            pedido.setDistancia(distancia[index]);
+            pedido.setFechaInicio(String.valueOf(LocalDateTime.now()));
+            try {
+                FileOutputStream fos = new FileOutputStream(archivo);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(pedido);
+                oos.close();
+                fos.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            pedidos.addPedido(pedido);
+            
+            //int index = cboVehiculo.getSelectedIndex();
+            info[0] = vehiculo[index];
+            info[1] = nombre[index];
+            info[2] = String.valueOf(precio[index]);
+            info[3] = String.valueOf(distancia[index]);
             modelo2.addRow(info);
             txtDistancia.setText("");
+            index++;
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error");
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidoActionPerformed
         // TODO add your handling code here:
-        VisualizarPedido ver = new VisualizarPedido();
+        VisualizarPedido ver = new VisualizarPedido(pedidos);
         ver.setVisible(true);
         ver.setTitle("Visualizar Pedido");
         ver.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_btnVerPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,15 +313,15 @@ public class FrmPedido extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmPedido(lista).setVisible(true);
+                new FrmPedido(lista, pedidos).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnVerPedido;
     private javax.swing.JComboBox<String> cboVehiculo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

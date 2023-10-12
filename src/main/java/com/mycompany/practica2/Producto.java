@@ -1,7 +1,9 @@
 
 package com.mycompany.practica2;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable{
     private static RegistroProductos lista;
     private String nombre;
     private double precio;
@@ -25,6 +27,11 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+    
+    public void mostrarDatos(){
+        System.out.println("Nombre: "+nombre);
+        System.out.println("Precio: "+precio);
     }
 
 }
